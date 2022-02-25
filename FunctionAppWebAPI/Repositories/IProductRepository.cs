@@ -12,7 +12,7 @@ namespace FunctionAppWebAPI.Repositories
         Task<List<Product>> GetProductsAsync();
         Task<Product> GetProductByIdAsync(string id);
         Task CreateProductAsync(ProductCreateModel model);
-        Task UpdateProductAsync(string id, ProductUpdateModel product);
-        Task DeleteProductAsync(string id);
+        Task<Product> UpdateProductAsync(Product product);
+        Task DeleteProductAsync(Product product);
     }
 }

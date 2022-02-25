@@ -9,16 +9,9 @@ namespace FunctionAppWebAPI.Models
 {
     public class Product
     {
-        //[JsonProperty("id")]
         public string Id { get; set; } = Guid.NewGuid().ToString("n");
-        
-        //[JsonProperty("name")]
         public string Name { get; set; }
-
-        //[JsonProperty("isCompleted")]
         public bool IsCompleted { get; set; }
-
-        //[JsonProperty("createdAt")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 

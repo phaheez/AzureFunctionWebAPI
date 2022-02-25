@@ -11,9 +11,7 @@ namespace FunctionAppWebAPI.Repositories
     {
         private readonly List<Product> products = new()
         {
-            new Product() { Id = Guid.NewGuid().ToString("n"), Name = "Avengers End Game", IsCompleted = false, CreatedAt = DateTime.UtcNow },
-            new Product() { Id = Guid.NewGuid().ToString("n"), Name = "Wonder Woman", IsCompleted = false, CreatedAt = DateTime.UtcNow },
-            new Product() { Id = Guid.NewGuid().ToString("n"), Name = "Gloceries", IsCompleted = false, CreatedAt = DateTime.UtcNow }
+            new Product() { Id = Guid.NewGuid().ToString("n"), Name = "Avengers End Game", IsCompleted = false, CreatedAt = DateTime.UtcNow }
         };
 
         public async Task CreateProductAsync(ProductCreateModel model)
@@ -23,29 +21,28 @@ namespace FunctionAppWebAPI.Repositories
             await Task.CompletedTask;
         }
 
-        public async Task DeleteProductAsync(string id)
-        {
-            var index = products.FindIndex(existingProduct => existingProduct.Id == id);
-            products.RemoveAt(index);
-            await Task.CompletedTask;
-        }
-
-        public async Task<Product> GetProductByIdAsync(string id)
-        {
-            var product = products.Where(product => product.Id == id).SingleOrDefault();
-            return await Task.FromResult(product);
-        }
-
         public async Task<List<Product>> GetProductsAsync()
         {
             return await Task.FromResult(products.ToList());
         }
 
-        public async Task UpdateProductAsync(string id, ProductUpdateModel model)
+        public async Task<Product> GetProductByIdAsync(string id)
         {
-            var product = products.FirstOrDefault(p => p.Id == id);
-            product.Name = model.Name;
-            product.IsCompleted = model.IsCompleted;
+            var product = products.FirstOrDefault(product => product.Id == id);
+            return await Task.FromResult(product);
+        }
+
+        public async Task<Product> UpdateProductAsync(Product product)
+        {
+            var index = products.FindIndex(existingItem => existingItem.Id == product.Id);
+            products[index] = product;
+
+            return await Task.FromResult(product);
+        }
+
+        public async Task DeleteProductAsync(Product product)
+        {
+            products.Remove(product);
             await Task.CompletedTask;
         }
     }
